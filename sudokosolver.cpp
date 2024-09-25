@@ -1,57 +1,58 @@
 #include<stdio.h>
 #include<bits/stdc++.h>
 using namespace std;
-int check(int,int ,vector<vector<int>>);
-void solve(vector<vector<int>>&vect)
-{
+bool check(int,int ,vector<vector<int>>&, int);
+bool solve(vector<vector<int>>&vect)
+{  int lastr=0;
+int lastc= 0;
     for(int i=0;i<9;i++)
-    {
+    { 
         for(int j=0;j<9;j++)
-        {
+        {   
             if(vect[i][j]==0)
             {
-                vect[i][j] = check(i,j,vect);
+              for(int k=1;k<=9;k++)
+              {
+                 if(check(i,j,vect,k))
+                 {
+                    vect[i][j]=k;
+                  if(solve(vect))
+                  return true;
+                  vect[i][j]=0;
+                  } 
+ 
+              }
+              
+            return false;
             }
         }
     }
+    return true;
 }
-int check(int i,int j,vector<vector<int>>vect)
-{ 
-   for(int k=1;k<=9;k++)
-   {
-     bool same= false; 
-        for(int col=0;col<9;col++)
-        {   bool same= false;
-         if(vect[i][col]==k)
-          same= true;
-          continue;
+bool check(int i,int j,vector<vector<int>>&vect, int num)
+{  
+        for(int x=0;x<9;x++)
+        {   
+         if(vect[i][x]==num || vect[x][j]==num)
+           return false;
+        
         }
-         for(int row=0;row<9;row++)
-        {  bool same= false;
-         if(vect[row][j]==k)
-          same= true;
-          continue;
-        }
-        for(int m= k/3; m< (k/3 +3);m++)
+       
+        for(int m= (i/3 )* 3; m< ((i/3)*3 +3);m++)
         {
-            for(int n= j/3; n< (j/3 +3); j++)
-            {  bool same= false;
-                if(vect[m][n]==k)
+            for(int n= (j/3)*3; n< ((j/3)*3 +3); n++)
+            { 
+                if(vect[m][n]==num)
                 {
-                    same= true;
-                    continue;
+                     return false;
+                  
                 }
             }
         }
-        if(same== false)
-        {
-            vect[i][j]= k;
-            break;
-        }
        
-    
+    return true;
    }
-}
+  
 
 int main()
 {
@@ -64,13 +65,28 @@ int main()
     while(a!=-1)
     {
         int row,column;
+        cout<<"enter row and col"<<endl;
         cin>>row>>column;
         int element;
+        cout<<"enter element"<<endl;
         cin>>element;
         sudoko[row][column]=element;
         cout<<"another element?(1 if yes,-1 if no)"<<endl;
         cin>>a;
     }
-    solve(sudoko);
-    
+    if(solve(sudoko))
+    {
+    for(int i=0;i<9;i++)
+    {
+        for(int j=0;j<9;j++)
+        {
+            cout<<sudoko[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    }
+    else{
+        cout<<"Can't Solve"<<endl;
+    }
+    return 0;
 }
