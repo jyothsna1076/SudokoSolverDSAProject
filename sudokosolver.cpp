@@ -1,22 +1,36 @@
-#include<stdio.h>
-#include<bits/stdc++.h>
-using namespace std;
+#include <vcl.h>
+#pragma hdrstop
+#include "Unit2.h" // Ensure to include your Form2 header
 
-int main()
+USEFORM("Win64x\Debug\Unit2.cpp", Form2);
+USEFORM("Unit1.cpp", Form1);
+USEFORM("Unit3.cpp", Form3);
+//---------------------------------------------------------------------------
+int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
-    cout<<"Give Input"<<endl;
-    vector<vector<int>> sudoko(9,vector<int>(9,0));
-    int a;
-    a=1;
-    cout<<"enter elements"<<endl;
-    while(a!=-1)
+    try
     {
-        int row,column;
-        cin>>row>>column;
-        int element;
-        cin>>element;
-        cout<<"another element?(1 if yes,-1 if no)"<<endl;
-        cin>>a;
-    }
-    
+        Application->Initialize();
+		Application->CreateForm(__classid(TForm2), &Form2);
+		Application->CreateForm(__classid(TForm1), &Form1);
+		Application->CreateForm(__classid(TForm3), &Form3);
+		Application->Run(); // Start the application
+	}
+	catch (Exception &exception)
+	{
+		Application->ShowException(&exception); // Handle exceptions
+	}
+	catch (...)
+	{
+		try
+		{
+			throw Exception("Unknown error"); // Catch all other exceptions
+		}
+		catch (Exception &exception)
+		{
+			Application->ShowException(&exception);
+		}
+	}
+	return 0; // Return success
 }
+
