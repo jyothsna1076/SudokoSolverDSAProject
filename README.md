@@ -24,7 +24,7 @@ To improve efficiency, we incorporate heuristic techniques that help minimize th
 
 Minimum Remaining Values (MRV): This heuristic prioritizes the cell with the fewest valid number options, helping the solver to reduce search depth by tackling constrained cells first.
 Degree Heuristic: When multiple cells have the same MRV, this heuristic prioritizes the cell that influences the most unfilled cells, further enhancing efficiency by focusing on high-impact choices.
-## 4. Constraint Propagation
+### 4. Constraint Propagation
 * Whenever a number is assigned to a cell, that number is immediately removed from possible values for all related cells in the same row, column, and 3x3 subgrid.
 * This elimination helps prevent conflicts early, reducing the need for backtracking by maintaining constraints at each step.
 ### 5. Data Structure Integration
