@@ -1,4 +1,4 @@
-# Group 6: Sudoku Solver
+# Sudoku Solver
 ### Objective:
 This project aims to develop an efficient Sudoku solver in C++ that uses the backtracking algorithm with enhancements like heuristic methods and advanced data structures. Sudoku is a popular 9x9 grid-based puzzle where each row, column, and 3x3 subgrid must contain unique numbers from 1 to 9. Besides solving Sudoku puzzles, our solution will provide a step-by-step, interactive visualization to help users understand the solving process. This project highlights the importance of constraint satisfaction, combinatorial optimization, and problem-solving techniques in artificial intelligence (AI) and computer science.
 
