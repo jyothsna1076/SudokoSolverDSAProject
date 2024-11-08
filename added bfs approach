@@ -1,0 +1,119 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+const int N = 9;
+vector<vector<int>> sudoku(N, vector<int>(N));
+vector<vector<int>> solutionSudoku(N, vector<int>(N));
+
+struct State {
+    vector<vector<int>> grid;
+    int row, col;
+
+    State(vector<vector<int>> g, int r, int c) : grid(g), row(r), col(c) {}
+};
+
+// Function to check if the current state is valid
+bool isValid(vector<vector<int>>& grid, int row, int col, int num) {
+    // Check row and column
+    for (int i = 0; i < N; i++) {
+        if (grid[row][i] == num || grid[i][col] == num) {
+            return false;
+        }
+    }
+
+    // Check 3x3 subgrid
+    int startRow = row - row % 3, startCol = col - col % 3;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (grid[i + startRow][j + startCol] == num) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+// Function to print the Sudoku grid
+void printGrid(const vector<vector<int>>& grid) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cout << grid[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+// BFS to solve Sudoku
+bool bfsSolve() {
+    queue<State> q;
+    q.push(State(sudoku, 0, 0));
+
+    while (!q.empty()) {
+        State curr = q.front();
+        q.pop();
+        
+        // Check if we've reached the end (solution found)
+        if (curr.row == N) {
+            solutionSudoku = curr.grid;
+            return true;
+        }
+
+        int nextRow = curr.row, nextCol = curr.col + 1;
+        if (nextCol == N) {
+            nextCol = 0;
+            nextRow++;
+        }
+
+        // If the current cell is already filled, move to the next cell
+        if (curr.grid[curr.row][curr.col] != 0) {
+            q.push(State(curr.grid, nextRow, nextCol));
+        } else {
+            // Try placing digits 1 to 9
+            for (int num = 1; num <= 9; num++) {
+                if (isValid(curr.grid, curr.row, curr.col, num)) {
+                    // Clone the grid and set the current cell
+                    vector<vector<int>> newGrid = curr.grid;
+                    newGrid[curr.row][curr.col] = num;
+
+                    // Print the updated grid
+                    cout << "Updating cell (" << curr.row << "," << curr.col << ") with " << num << endl;
+                    printGrid(newGrid);
+                    cout << endl;
+
+                    q.push(State(newGrid, nextRow, nextCol));
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    // Input Sudoku grid from the user
+    cout << "Enter the Sudoku grid (use 0 for empty cells):\n";
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cin >> sudoku[i][j];
+        }
+    }
+
+    // Print initial Sudoku grid
+    cout << "Initial Sudoku grid:\n";
+    printGrid(sudoku);
+    cout << endl;
+
+    // Solve the Sudoku using BFS
+    if (bfsSolve()) {
+        cout << "Solved Sudoku grid:\n";
+        printGrid(solutionSudoku);
+    } else {
+        cout << "No solution found.\n";
+    }
+
+    return 0;
+}
