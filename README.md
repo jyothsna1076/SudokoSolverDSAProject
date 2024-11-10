@@ -42,23 +42,10 @@ Follow these steps to set up the Sudoku Solver on your local machine.
 - C++ compiler (g++ or similar)
 - RAD Studio (if using the UI-based application)
 
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/SudokuSolverDSAProject.git
-   cd SudokuSolverDSAProject
-   ```
-
-2. Compile the C++ code:
-   ```bash
-   g++ sudoku_solver.cpp -o sudoku_solver
-   ```
-
-3. Run the executable:
-   ```bash
-   ./sudoku_solver
-   ```
+Installation:
+Install RAD Studio on your machine.
+Download and install the executable file (sudoku_solver.exe) available in the repository.
+Run sudoku_solver.exe to start the application.
 
 ## 🧩 Usage
 
